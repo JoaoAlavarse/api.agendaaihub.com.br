@@ -1,0 +1,45 @@
+package dev.alavarse.template.api.domain.user.model;
+
+import dev.alavarse.template.api.shared.persistence.BaseEntity;
+import dev.alavarse.template.api.shared.persistence.SoftDelete;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.validator.constraints.Length;
+
+import java.util.Set;
+
+@Entity
+@Table(name = "users")
+@DynamicUpdate
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserEntity extends BaseEntity {
+
+    @Column(nullable = false)
+    @Length(min = 3)
+    private String name;
+
+    @Column(nullable = false, unique = true)
+    @Email
+    private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false, updatable = false)
+    @Enumerated(EnumType.STRING)
+    private UserRoles role;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private UserStatus status;
+
+    @Embedded
+    @Builder.Default
+    private SoftDelete softDelete = new SoftDelete();
+}
