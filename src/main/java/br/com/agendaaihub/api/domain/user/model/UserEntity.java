@@ -19,14 +19,16 @@ import org.hibernate.validator.constraints.Length;
 public class UserEntity extends BaseEntity {
 
     @Column(nullable = false)
-    @Length(min = 3)
+    @Length(min = 3, max = 255)
     private String name;
 
     @Column(nullable = false, unique = true)
     @Email
+    @Length(min = 3, max = 255)
     private String email;
 
     @Column(nullable = false)
+    @Length(min = 3, max = 255)
     private String password;
 
     @Column(nullable = false, updatable = false)
